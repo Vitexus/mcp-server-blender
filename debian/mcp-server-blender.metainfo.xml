@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="console-application">
+  <id>io.github.ahujasid.blender-mcp</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Blender MCP</name>
+  <summary>Blender integration through the Model Context Protocol</summary>
+  <description>
+    <p>
+      Blender MCP runs a Model Context Protocol (MCP) server that connects
+      Blender to MCP-compatible AI assistants, enabling prompt-assisted 3D
+      modeling, scene creation and manipulation driven by an LLM.
+    </p>
+    <p>
+      Through the MCP connection, an assistant can inspect and modify a
+      running Blender scene: creating and editing objects, applying
+      materials, executing arbitrary Python inside Blender, and downloading
+      assets from third-party sources such as Poly Haven and Sketchfab.
+    </p>
+  </description>
+  <icon type="stock">mcp-server-blender-icon</icon>
+  <provides>
+    <binary>blender-mcp</binary>
+  </provides>
+  <url type="homepage">https://github.com/ahujasid/blender-mcp</url>
+  <url type="bugtracker">https://github.com/ahujasid/blender-mcp/issues</url>
+  <developer id="io.github.ahujasid">
+    <name>Siddharth Ahuja</name>
+  </developer>
+  <categories>
+    <category>Development</category>
+    <category>Graphics</category>
+  </categories>
+  <releases>
+    <release version="1.9.1" date="2026-09-08"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>
