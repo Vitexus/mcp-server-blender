@@ -1,0 +1,5 @@
+mcp-server-blender (1.9.1-1) UNRELEASED; urgency=low
+
+  * Initial Debian packaging
+
+ -- Vítězslav Dvořák <info@vitexsoftware.cz>  Tue, 08 Sep 2026 18:42:10 +0200
