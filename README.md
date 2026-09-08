@@ -114,6 +114,7 @@ In Blender's 3D viewport, press `N` → open the **MCP for Blender** tab → cli
   - [Make your client find uvx](#make-your-client-find-uvx)
   - [Pin the Python version](#pin-the-python-version)
   - [Install without uv](#install-without-uv)
+  - [Install via apt (Debian/Ubuntu)](#install-via-apt-debianubuntu)
   - [Run with Docker](#run-with-docker)
   - [Environment Variables](#environment-variables)
 - [MCP Client Setup](#mcp-client-setup)
@@ -249,6 +250,38 @@ pipx ensurepath          # then restart your shell / client
 ```
 
 Use the resulting absolute path as `"command"` (find it with `which blender-mcp` / `where blender-mcp`) and omit `args`.
+
+### Install via apt (Debian/Ubuntu)
+
+This fork is also published as a native `.deb` package (`mcp-server-blender`) via the
+VitexSoftware apt repository, currently built for Debian trixie. It installs the `blender-mcp`
+command system-wide, so no `uv`/`uvx`/`pipx` is needed:
+
+```bash
+curl -fsSL https://repo.vitexsoftware.com/KEY.gpg | sudo gpg --dearmor -o /usr/share/keyrings/vitexsoftware-archive-keyring.gpg
+echo "Types: deb
+URIs: https://repo.vitexsoftware.com/
+Suites: trixie
+Components: main
+Signed-By: /usr/share/keyrings/vitexsoftware-archive-keyring.gpg" | sudo tee /etc/apt/sources.list.d/vitexsoftware.sources
+
+sudo apt-get update
+sudo apt-get install mcp-server-blender
+```
+
+Then point your MCP client at the installed binary instead of `uvx blender-mcp`:
+
+```json
+{
+    "mcpServers": {
+        "blender": {
+            "command": "blender-mcp"
+        }
+    }
+}
+```
+
+Browse the repository directly at [repo.vitexsoftware.com](https://repo.vitexsoftware.com/).
 
 ### Run with Docker
 
@@ -577,6 +610,35 @@ Here are some examples of what you can ask Claude to do:
 | *"Create a sphere and place it above the cube"* | |
 | *"Make the lighting like a studio"* | |
 | *"Point the camera at the scene, and make it isometric"* | |
+
+#### Full animation example
+
+The prompts above are one-liners, but Claude Code driving this MCP server can go a lot further —
+build a whole procedural scene, rig up a physically-grounded animation, and render it to video,
+all from a single detailed prompt like this one — [watch the resulting render](https://vhsky.cz/w/vMC1LrxCxoiQEN2XqPka5X):
+
+> Create a moon landscape (craters, dramatic low-angle sunlight, starfield) and build a rocket
+> out of primitives — body, nose cone, fins, landing legs with a nozzle that has real clearance
+> above the ground, and an engine flame. Animate a landing: at frame 1 the rocket is 100 m up and
+> descending, decelerating as the engine brakes (the flame grows more intense as it works harder).
+> The camera watches from high above at first and gradually moves closer. The instant the landing
+> legs touch the surface, the engine cuts and the flame goes out instantly. Because the ground is
+> sloped, the rocket topples over: whichever leg is standing on the locally highest ground touches
+> first and the rocket tips around that leg until the opposite leg also reaches the ground, then
+> the pivot transfers to that second leg and the fall continues around it. When it topples it
+> explodes — fireball, flash, flying debris — and the camera pulls back quickly so the scale of
+> the blast reads clearly, then the scene ends. Add a "VitexSoftware" text and this logo image
+> [attach a logo file] on the side of the rocket that stays facing the camera, sized so both are
+> legible, with the text in a dark color for contrast against the light hull. Render the full
+> animation and save it as an MP4.
+
+A prompt this ambitious rarely lands perfectly on the first pass — expect (and ask for) a few
+rounds of feedback, the same way you'd art-direct a human: *"the rocket bounces on touchdown, that's
+wrong"*, *"it's landing like it hit water, lunar regolith doesn't behave that way"*, *"the logo
+ended up on the side facing away from the camera"*. Each fix is just another prompt; Claude Code
+can inspect its own renders (via `get_viewport_screenshot` or by rendering a still and reading the
+file back) to verify a fix actually worked before moving on, rather than taking its own code's
+success on faith.
 
 ---
 
