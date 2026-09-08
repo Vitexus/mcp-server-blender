@@ -2,15 +2,21 @@
 
 // Current version of this Pipeline https://github.com/VitexSoftware/BuildImages/blob/main/Test/Jenkinsfile
 
+// Restricted to debian:trixie only: this pyproject-only (no setup.py) package
+// fails on other distros' toolchains (dh-python/pybuild there falls back to
+// the legacy setuptools plugin instead of the pyproject plugin, producing an
+// UNKNOWN-0.0.0 wheel) - the same known issue seen on python-anyio. trixie is
+// what's actually needed for the mcprack build; re-enable the other
+// distros' toolchains once that issue is sorted out.
 String[] distributions = [
-			'debian:bookworm',
+			// 'debian:bookworm', // Disabled: pending toolchain fix, not needed right now.
 			'debian:trixie',
 			// 'debian:forky', // Disabled: Forky is still unstable/research-only.
 			//                 // The full Debian package ecosystem is not yet available for Forky.
 			//                 // Re-enable once the stack builds cleanly for Forky.
-			'ubuntu:jammy',
-			'ubuntu:noble',
-			'ubuntu:resolute',
+			// 'ubuntu:jammy', // Disabled: pending toolchain fix, not needed right now.
+			// 'ubuntu:noble', // Disabled: pending toolchain fix, not needed right now.
+			// 'ubuntu:resolute', // Disabled: pending toolchain fix, not needed right now.
 ]
 
 String vendor = 'vitexsoftware'
