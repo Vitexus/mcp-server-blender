@@ -1,5 +1,7 @@
-mcp-server-blender (1.9.1-1) UNRELEASED; urgency=low
+mcp-server-blender (1.9.1-2) trixie; urgency=low
 
   * Initial Debian packaging
+  * Fix: depend on python3-fastmcp instead of removed mcp.server.fastmcp
+    (mcp 2.0 API break).
 
- -- Vítězslav Dvořák <info@vitexsoftware.cz>  Tue, 08 Sep 2026 18:42:10 +0200
+ -- Vítězslav Dvořák <info@vitexsoftware.cz>  Tue, 08 Sep 2026 19:49:04 +0200
