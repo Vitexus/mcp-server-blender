@@ -469,7 +469,7 @@ env = { BLENDER_HOST = "localhost", BLENDER_PORT = "9876" }
 uvx blender-mcp install-addon
 ```
 
-This copies the addon into your Blender addons folder as `blender_mcp.py`. It prints where it wrote to, and keeps a `.bak` of any file it replaces.
+This copies the addon into your Blender addons folder as `mcp_for_blender_addon.py`. It prints where it wrote to, and keeps a `.bak` of any file it replaces.
 
 > Optional: `uvx blender-mcp addon-paths` lists detected Blender addons folders. Override the destination with `BLENDERMCP_ADDONS_DIR=/path/to/scripts/addons`.
 
@@ -477,7 +477,7 @@ This copies the addon into your Blender addons folder as `blender_mcp.py`. It pr
 
 **3.** Go to **Edit → Preferences → Add-ons**
 
-**4.** Enable **Interface: MCP for Blender** (search "MCP for Blender"). If it doesn't appear yet, click **Install…** and select the copied `blender_mcp.py` / `addon.py`, or restart Blender.
+**4.** Enable **Interface: MCP for Blender** (search "MCP for Blender"). If it doesn't appear yet, click **Install…** and select the copied `mcp_for_blender_addon.py` / `addon.py`, or restart Blender.
 
 **5. Manual alternative** — if the command above can't find your Blender install, or you prefer doing it by hand: download `addon.py` from this repo → in Blender, **Edit → Preferences → Add-ons → Install…** → select the downloaded `addon.py` → enable it.
 

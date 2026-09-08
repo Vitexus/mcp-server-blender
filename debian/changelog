@@ -1,3 +1,13 @@
+mcp-server-blender (1.9.1-3) trixie; urgency=medium
+
+  * Fix: rename installed addon file to mcp_for_blender_addon.py to
+    avoid a module-name collision with the installed blender_mcp server
+    package on systems where Blender uses the system Python (e.g.
+    Debian's blender package). Previously caused "module 'blender_mcp'
+    has no attribute 'register'" when enabling the addon.
+
+ -- Vítězslav Dvořák <info@vitexsoftware.cz>  Tue, 08 Sep 2026 20:10:35 +0200
+
 mcp-server-blender (1.9.1-2) trixie; urgency=low
 
   * Initial Debian packaging

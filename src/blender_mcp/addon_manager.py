@@ -23,7 +23,16 @@ logger = logging.getLogger("BlenderMCPServer")
 EXPECTED_ADDON_PROTOCOL_VERSION = 5
 
 _ADDON_MARKER = 'bl_info = {\n    "name": "MCP for Blender"'
-_INSTALLED_FILENAME = "blender_mcp.py"
+# Not "blender_mcp.py": on systems where Blender is linked against the
+# system Python (e.g. Debian/Ubuntu's blender package), Blender's addon
+# search path sits behind sys.path entries like /usr/lib/python3/dist-packages.
+# A single-file addon named blender_mcp.py registers a module also named
+# "blender_mcp" - which collides with the installed blender_mcp *server*
+# package (this same project's MCP server, python3-dist-packages/blender_mcp/).
+# `import blender_mcp` then silently resolves to the server package, which has
+# no register(), and Blender fails to enable the addon with "module
+# 'blender_mcp' has no attribute 'register'".
+_INSTALLED_FILENAME = "mcp_for_blender_addon.py"
 _PROTOCOL_RE = re.compile(r"ADDON_PROTOCOL_VERSION\s*=\s*(\d+)")
 # Matches the current name and the pre-rename "Blender MCP" so install-addon
 # still replaces installs from older releases.
@@ -330,15 +339,24 @@ def install_addon(
                 addons_dir=str(addons_dir),
             )
 
+    target = addons_dir / _INSTALLED_FILENAME
     replaced: list[str] = []
     if addons_dir.is_dir():
         for path in list(addons_dir.iterdir()):
             if path.is_file() and path.suffix == ".py" and _is_blendermcp_addon_file(path):
-                _backup_addon_file(path, source)
-                shutil.copy2(source, path)
-                replaced.append(str(path))
+                if path == target:
+                    _backup_addon_file(path, source)
+                    shutil.copy2(source, path)
+                    replaced.append(str(path))
+                else:
+                    # Old install under a different filename (e.g. the
+                    # pre-rename blender_mcp.py). Back it up, then remove it
+                    # rather than overwrite it in place, so Blender is left
+                    # with a single addon file under the current name instead
+                    # of two files racing for the same bl_info.
+                    _backup_addon_file(path, source)
+                    path.unlink()
 
-    target = addons_dir / _INSTALLED_FILENAME
     if str(target) not in replaced:
         _backup_addon_file(target, source)
         shutil.copy2(source, target)
