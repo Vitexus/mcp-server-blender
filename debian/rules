@@ -5,5 +5,16 @@ export PYBUILD_NAME=blender_mcp
 %:
 	dh $@ --with python3 --buildsystem=pybuild
 
+override_dh_auto_configure:
+	# Older setuptools (Debian bookworm, Ubuntu jammy, ...) rejects the PEP 639
+	# SPDX string form of project.license; use the classic classifier instead.
+	sed -i '/^license = "MIT"$$/d' pyproject.toml
+	sed -i 's/"Operating System :: OS Independent",/"Operating System :: OS Independent",\n    "License :: OSI Approved :: MIT License",/' pyproject.toml
+	dh_auto_configure
+
+override_dh_auto_clean:
+	dh_auto_clean
+	git checkout pyproject.toml 2>/dev/null || true
+
 override_dh_auto_test:
 	# Skip tests - test dependencies not packaged
