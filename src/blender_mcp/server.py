@@ -306,7 +306,12 @@ def get_blender_connection():
     return _blender_connection
 
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+})
 async def get_addon_status(ctx: Context, user_prompt: str = "") -> str:
     """
     Check whether the connected Blender addon matches this MCP server version.
@@ -347,7 +352,12 @@ async def get_addon_status(ctx: Context, user_prompt: str = "") -> str:
         return f"Error checking addon status: {e}"
 
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+})
 def disable_telemetry(ctx: Context, user_prompt: str = "") -> str:
     """
     Turn OFF collection of prompts, code, screenshots and scene data.
@@ -375,7 +385,12 @@ def disable_telemetry(ctx: Context, user_prompt: str = "") -> str:
         return f"Error turning off data collection: {e}"
 
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+})
 @telemetry_tool("get_scene_info")
 async def get_scene_info(ctx: Context, user_prompt: str) -> str:
     """Get detailed information about the current Blender scene
@@ -415,7 +430,12 @@ async def get_scene_info(ctx: Context, user_prompt: str) -> str:
         except Exception:
             pass
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+})
 @telemetry_tool("get_object_info")
 async def get_object_info(ctx: Context, object_name: str, user_prompt: str = "") -> str:
     """
@@ -458,7 +478,12 @@ async def get_object_info(ctx: Context, object_name: str, user_prompt: str = "")
         except Exception:
             pass
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+})
 def get_viewport_screenshot(ctx: Context, max_size: int = 1000, user_prompt: str = "") -> Image:
     """
     Capture a screenshot of the current Blender 3D viewport.
@@ -553,7 +578,12 @@ def get_viewport_screenshot(ctx: Context, max_size: int = 1000, user_prompt: str
             pass
 
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": True,
+    "idempotentHint": False,
+    "openWorldHint": False,
+})
 @trajectory_tool("execute_blender_code", capture_code=True)
 async def execute_blender_code(ctx: Context, code: str, user_prompt: str = "") -> str:
     """
@@ -587,7 +617,12 @@ async def execute_blender_code(ctx: Context, code: str, user_prompt: str = "") -
         logger.error(f"Error executing code: {str(e)}")
         return f"Error executing code: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 @telemetry_tool("get_polyhaven_categories")
 async def get_polyhaven_categories(ctx: Context, asset_type: str = "hdris", user_prompt: str = "") -> str:
     """
@@ -622,7 +657,12 @@ async def get_polyhaven_categories(ctx: Context, asset_type: str = "hdris", user
         logger.error(f"Error getting Polyhaven categories: {str(e)}")
         return f"Error getting Polyhaven categories: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 @telemetry_tool("search_polyhaven_assets")
 async def search_polyhaven_assets(
     ctx: Context,
@@ -674,7 +714,12 @@ async def search_polyhaven_assets(
         logger.error(f"Error searching Polyhaven assets: {str(e)}")
         return f"Error searching Polyhaven assets: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 @trajectory_tool("download_polyhaven_asset")
 async def download_polyhaven_asset(
     ctx: Context,
@@ -728,7 +773,12 @@ async def download_polyhaven_asset(
         logger.error(f"Error downloading Polyhaven asset: {str(e)}")
         return f"Error downloading Polyhaven asset: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+})
 @trajectory_tool("set_texture")
 async def set_texture(
     ctx: Context,
@@ -788,7 +838,12 @@ async def set_texture(
         logger.error(f"Error applying texture: {str(e)}")
         return f"Error applying texture: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+})
 @telemetry_tool("get_polyhaven_status")
 async def get_polyhaven_status(ctx: Context, user_prompt: str = "") -> str:
     """
@@ -807,7 +862,12 @@ async def get_polyhaven_status(ctx: Context, user_prompt: str = "") -> str:
         logger.error(f"Error checking PolyHaven status: {str(e)}")
         return f"Error checking PolyHaven status: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+})
 @telemetry_tool("get_hyper3d_status")
 async def get_hyper3d_status(ctx: Context, user_prompt: str = "") -> str:
     """
@@ -826,7 +886,12 @@ async def get_hyper3d_status(ctx: Context, user_prompt: str = "") -> str:
         logger.error(f"Error checking Hyper3D status: {str(e)}")
         return f"Error checking Hyper3D status: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+})
 @telemetry_tool("get_sketchfab_status")
 async def get_sketchfab_status(ctx: Context, user_prompt: str = "") -> str:
     """
@@ -845,7 +910,12 @@ async def get_sketchfab_status(ctx: Context, user_prompt: str = "") -> str:
         logger.error(f"Error checking Sketchfab status: {str(e)}")
         return f"Error checking Sketchfab status: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 @telemetry_tool("search_sketchfab_models")
 async def search_sketchfab_models(
     ctx: Context,
@@ -922,7 +992,12 @@ async def search_sketchfab_models(
         logger.error(traceback.format_exc())
         return f"Error searching Sketchfab models: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 @telemetry_tool("get_sketchfab_model_preview")
 async def get_sketchfab_model_preview(
     ctx: Context,
@@ -965,7 +1040,12 @@ async def get_sketchfab_model_preview(
         raise Exception(f"Failed to get preview: {str(e)}")
 
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 @trajectory_tool("download_sketchfab_model")
 async def download_sketchfab_model(
     ctx: Context,
@@ -1123,7 +1203,12 @@ def _polypizza_licence_id(licence):
     raise ValueError(f"Unknown Poly Pizza licence {licence!r}. Use 'CC0' or 'CC-BY'.")
 
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+})
 @telemetry_tool("get_polypizza_status")
 async def get_polypizza_status(ctx: Context, user_prompt: str = "") -> str:
     """
@@ -1145,7 +1230,12 @@ async def get_polypizza_status(ctx: Context, user_prompt: str = "") -> str:
         logger.error(f"Error checking Poly Pizza status: {str(e)}")
         return f"Error checking Poly Pizza status: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 @telemetry_tool("search_polypizza_models")
 async def search_polypizza_models(
     ctx: Context,
@@ -1241,7 +1331,12 @@ async def search_polypizza_models(
         return f"Error searching Poly Pizza models: {str(e)}"
 
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 @trajectory_tool("download_polypizza_model")
 async def download_polypizza_model(
     ctx: Context,
@@ -1347,7 +1442,12 @@ def _process_bbox(original_bbox: list[float] | list[int] | None) -> list[int] | 
         return original_bbox
     return [int(float(i) / max(original_bbox) * 100) for i in original_bbox] if original_bbox else None
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": False,
+    "idempotentHint": False,
+    "openWorldHint": True,
+})
 @trajectory_tool("generate_hyper3d_model_via_text")
 async def generate_hyper3d_model_via_text(
     ctx: Context,
@@ -1384,7 +1484,12 @@ async def generate_hyper3d_model_via_text(
         logger.error(f"Error generating Hyper3D task: {str(e)}")
         return f"Error generating Hyper3D task: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": False,
+    "idempotentHint": False,
+    "openWorldHint": True,
+})
 @trajectory_tool("generate_hyper3d_model_via_images")
 async def generate_hyper3d_model_via_images(
     ctx: Context,
@@ -1441,7 +1546,12 @@ async def generate_hyper3d_model_via_images(
         logger.error(f"Error generating Hyper3D task: {str(e)}")
         return f"Error generating Hyper3D task: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 @telemetry_tool("poll_rodin_job_status")
 async def poll_rodin_job_status(
     ctx: Context,
@@ -1485,7 +1595,12 @@ async def poll_rodin_job_status(
         logger.error(f"Error generating Hyper3D task: {str(e)}")
         return f"Error generating Hyper3D task: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 @trajectory_tool("import_generated_asset")
 async def import_generated_asset(
     ctx: Context,
@@ -1519,7 +1634,12 @@ async def import_generated_asset(
         logger.error(f"Error generating Hyper3D task: {str(e)}")
         return f"Error generating Hyper3D task: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": False,
+})
 def get_hunyuan3d_status(ctx: Context, user_prompt: str = "") -> str:
     """
     Check if Hunyuan3D integration is enabled in Blender.
@@ -1534,7 +1654,12 @@ def get_hunyuan3d_status(ctx: Context, user_prompt: str = "") -> str:
         logger.error(f"Error checking Hunyuan3D status: {str(e)}")
         return f"Error checking Hunyuan3D status: {str(e)}"
     
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": False,
+    "idempotentHint": False,
+    "openWorldHint": True,
+})
 @trajectory_tool("generate_hunyuan3d_model")
 async def generate_hunyuan3d_model(
     ctx: Context,
@@ -1572,7 +1697,12 @@ async def generate_hunyuan3d_model(
         logger.error(f"Error generating Hunyuan3D task: {str(e)}")
         return f"Error generating Hunyuan3D task: {str(e)}"
     
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": True,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 def poll_hunyuan_job_status(
     ctx: Context,
     job_id: str=None,
@@ -1601,7 +1731,12 @@ def poll_hunyuan_job_status(
         logger.error(f"Error generating Hunyuan3D task: {str(e)}")
         return f"Error generating Hunyuan3D task: {str(e)}"
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": False,
+    "idempotentHint": True,
+    "openWorldHint": True,
+})
 @trajectory_tool("import_generated_asset_hunyuan")
 async def import_generated_asset_hunyuan(
     ctx: Context,
@@ -1631,7 +1766,12 @@ async def import_generated_asset_hunyuan(
         return f"Error generating Hunyuan3D task: {str(e)}"
 
 
-@mcp.tool()
+@mcp.tool(annotations={
+    "readOnlyHint": False,
+    "destructiveHint": False,
+    "idempotentHint": False,
+    "openWorldHint": False,
+})
 def record_trajectory_feedback(
     ctx: Context,
     feedback: str,
