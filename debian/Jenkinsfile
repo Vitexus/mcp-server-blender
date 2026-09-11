@@ -11,9 +11,7 @@
 String[] distributions = [
 			// 'debian:bookworm', // Disabled: pending toolchain fix, not needed right now.
 			'debian:trixie',
-			// 'debian:forky', // Disabled: Forky is still unstable/research-only.
-			//                 // The full Debian package ecosystem is not yet available for Forky.
-			//                 // Re-enable once the stack builds cleanly for Forky.
+			'debian:forky',
 			// 'ubuntu:jammy', // Disabled: pending toolchain fix, not needed right now.
 			// 'ubuntu:noble', // Disabled: pending toolchain fix, not needed right now.
 			// 'ubuntu:resolute', // Disabled: pending toolchain fix, not needed right now.
