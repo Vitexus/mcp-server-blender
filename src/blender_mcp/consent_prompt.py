@@ -182,9 +182,7 @@ async def maybe_prompt_for_consent(ctx: Any) -> str:
             # instead -- a model relaying prose is not the user answering.
             return ""
 
-        result = await ctx.elicit(
-            message=PROMPT_MESSAGE, schema=TelemetryConsentResponse
-        )
+        result = await ctx.elicit(PROMPT_MESSAGE, TelemetryConsentResponse)
         action = getattr(result, "action", None)
 
         if action == "accept":
